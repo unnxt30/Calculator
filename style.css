@@ -123,3 +123,23 @@ button:hover{
 {
     background-color: rgb(87, 190, 231);
 }
+
+.btn
+{
+    background-color: rgb(209, 209, 23);
+}
+
+.btn:hover
+{
+    background-color: rgb(133, 133, 26);
+}
+
+#equal
+{
+    background-color: #ff4828;
+}
+
+#equal:hover
+{
+    background-color: #cc2406;
+}
