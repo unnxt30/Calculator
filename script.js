@@ -19,7 +19,7 @@ const operatorMap =
 
 function operate(num1,num2,operator)
 {
-    return operatorMap[operator](parseInt(num1), parseInt(num2));
+    return operatorMap[operator](parseFloat(num1), parseFloat(num2));
 };
 
 function updateScreen(str)
@@ -59,12 +59,17 @@ for (let i = 0; i<buttons.length; i++)
                 num_count+=1;
             }
             
-            if(op_count>0)
+            if(op_count>0 && op_count <=1)
             {
                 num2 = screen.textContent;
             }
+            else if(op_count == 0)
+            {
+                num1 = screen.textContent;
+            }
             else
             {
+                num2 = result.toString();   
                 num1 = screen.textContent;
             }
             
@@ -86,8 +91,7 @@ for (let i = 0; i<buttons.length; i++)
         {
             buttons[i].onclick = function()
             {   
-                 op = buttons[i].textContent;
-                
+                op = buttons[i].textContent;
                 num_count = 0;
                 op_count+=1;
             }
