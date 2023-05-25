@@ -6,6 +6,12 @@ const all_clear = document.getElementById("clear");
 const del = document.getElementById("del");
 const num_array = [];
 
+const operatorMap = {
+    '+': (a, b) => a + b,
+    '-': (a, b) => a - b,
+    'X': (a, b) => a * b,
+    '/': (a, b) => a / b,
+  };
 for (let i in Array.from(numbers))
 {
     num_array.push(i);
@@ -19,14 +25,19 @@ function getInt(digit)
     return integer;
 }
 
-function updateScreen()
-{
-    screen.textContent = "";
+function updateScreen(str)
+{   
+    if(screen.textContent!= "")
+    {
+        screen.textContent = "";
+    }
+    screen.textContent = str;
 }
 
 let num1 = "";
+let num2 = "";
 let op = "";
-let sum = 0;
+let result = 0;
 let op_count = 0;
 let num_count = 0;
 
@@ -36,44 +47,86 @@ for(let i = 0; i<16; i++)
     {   
         
         buttons[i].onclick = function()
-        {               
-            screen.textContent += buttons[i].textContent;  
-            num1 = screen.textContent; 
+        {   
+            screen.textContent += buttons[i].textContent;      
+            if(num_count<1)
+            {
+                num1 = screen.textContent;
+            }
+            else if(num_count>0)
+            {
+                num2 = screen.textContent;
+            }
+            
         }
+        
     }
+
     else if(buttons[i].id == 'addition'){
         buttons[i].onclick = function()
         {   
+            num_count+=1;
             updateScreen();
-            sum += parseInt(num1);
-            // console.log(num1);
-            // console.log(sum);  
             op = buttons[i].textContent;
-            
             op_count += 1;
             if(op_count>1)
             {   
-                screen.textContent = sum.toString();
+                if(num1 == "" || num2 == "")
+                {
+                    result += parseInt(num1);
+                    num2 = num1;
+                    num1 = result;
+                    // num2 = num1;
+                    result = operatorMap[op](parseInt(num1), parseInt(num2)).toString();
+                }
+                else
+                {
+                    num_count = 0;
+                    num2 = num1;
+                    num1 = result;
+                    result = operatorMap[op](parseInt(num1), parseInt(num2)).toString();
+                }
+                updateScreen(result.toString());
             }
-            
-            
         }
-        // screen.textContent = sum.toString();
-        // updateScreen();
     }
+
+    else if(buttons[i].id == 'equal')
+    {   
+        buttons[i].onclick = function()
+        {   
+            console.log(`${parseInt(num1)}, ${parseInt(num2)}`)
+            result = operatorMap[op](parseInt(num1), parseInt(num2)).toString();
+            // console.log(result);
+            updateScreen(result.toString());
+            op_count = 0;
+        }
+        
+    }
+        // screen.textContent = result.toString();
+        // updateScreen();
 }
 
 all_clear.onclick = function()
 {
     updateScreen();
-    sum = 0;
-    num1 = 0;
-    op_count = 0;   
+    result = 0;
+    num1 = "";
+    num2 = "";
+    op_count = 0;  
+    num_count = 0; 
 }
 
 del.onclick = function()
 {
     screen.textContent = (screen.textContent).slice(0,-1);
-    num1 = (screen.textContent.toString());
+    if(num_count<1)
+    {
+        num1 = screen.textContent;
+    }
+    else if(num_count>0)
+    {
+        num2 = screen.textContent;
+    }   
 
 }
