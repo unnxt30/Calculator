@@ -109,3 +109,22 @@ all_clear.onclick = function()
     num_count = 0; 
     op_count = 0;
 }
+
+
+del.onclick = function()
+{
+    screen.textContent = (screen.textContent).slice(0,-1);
+    if(op_count>0 && op_count <=1)
+            {
+                num2 = screen.textContent;
+            }
+            else if(op_count == 0)
+            {
+                num1 = screen.textContent;
+            }
+            else
+            {
+                num2 = result.toString();   
+                num1 = screen.textContent;
+            }
+}
