@@ -67,6 +67,11 @@ for (let i = 0; i<buttons.length; i++)
             {
                 num1 = screen.textContent;
             }
+            else if(op_count>0 && (op == '-' || op == '/'))
+            {
+                num2 = screen.textContent;
+                num1 = result.toString();
+            }
             else
             {
                 num2 = result.toString();   
@@ -93,6 +98,15 @@ for (let i = 0; i<buttons.length; i++)
             {   
                 op = buttons[i].textContent;
                 num_count = 0;
+                
+                // if(op_count > 1)
+                // {   
+                //     result = operate(num1, num2, op);
+                //     updateScreen(result);
+                //     num2 = result.toString();   
+                //     num1 = screen.textContent;
+                // }
+
                 op_count+=1;
             }
         }
