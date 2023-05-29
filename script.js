@@ -38,8 +38,10 @@ let result = 0;
 let num_count = 0;
 let op_count = 0;
 let op = "";
+let op1 = "";
+let op2 = "";
+let res_count = 0;
 
-// console.log(buttons.length)
 
 for (let i = 0; i<buttons.length; i++)
 {
@@ -48,7 +50,19 @@ for (let i = 0; i<buttons.length; i++)
         
         buttons[i].onclick = function()
         {      
-            
+            // console.log(`${num1}, ${num2}, ${op1}, ${op2}`)
+            if(res_count>0)
+            {
+                updateScreen();
+                result = 0;
+                num1 = "";
+                num2 = "";
+                num_count = 0; 
+                // op_count = 0;
+                res_count = 0;
+
+            }
+
             if(num_count > 0)
             {
                 screen.textContent += buttons[i].textContent;
@@ -60,7 +74,8 @@ for (let i = 0; i<buttons.length; i++)
             }
             
             if(op_count>0 && op_count <=1)
-            {
+            {   
+                console.log(result);
                 num2 = screen.textContent;
             }
             else if(op_count == 0)
@@ -78,18 +93,21 @@ for (let i = 0; i<buttons.length; i++)
                 num1 = screen.textContent;
             }
             
+            // console.log(`${num1}, ${num2}, ${op1}, ${op2}`)
         }
 
     }
     else if(buttons[i].classList.contains('btn'))
     {   
         if(buttons[i].id == 'equal')
-        {
+        {   
             buttons[i].onclick = function()
             {
                 result = operate(num1, num2, op);
-                console.log(`${num1}, ${num2} -> ${result}`);
+                console.log(`${num1} ${op} ${num2} ${op_count}`);
                 updateScreen(result.toString());
+                res_count+=1;
+
             }
         }
         else
@@ -98,15 +116,6 @@ for (let i = 0; i<buttons.length; i++)
             {   
                 op = buttons[i].textContent;
                 num_count = 0;
-                
-                // if(op_count > 1)
-                // {   
-                //     result = operate(num1, num2, op);
-                //     updateScreen(result);
-                //     num2 = result.toString();   
-                //     num1 = screen.textContent;
-                // }
-
                 op_count+=1;
             }
         }
@@ -114,6 +123,8 @@ for (let i = 0; i<buttons.length; i++)
 
 }
 
+
+// AC button, clears the screen, ready for new operations.
 all_clear.onclick = function()
 {
     updateScreen();
@@ -124,21 +135,21 @@ all_clear.onclick = function()
     op_count = 0;
 }
 
-
+// Del button, clears one unit at a time.
 del.onclick = function()
 {
     screen.textContent = (screen.textContent).slice(0,-1);
     if(op_count>0 && op_count <=1)
-            {
-                num2 = screen.textContent;
-            }
-            else if(op_count == 0)
-            {
-                num1 = screen.textContent;
-            }
-            else
-            {
-                num2 = result.toString();   
-                num1 = screen.textContent;
-            }
+    {
+        num2 = screen.textContent;
+    }
+    else if(op_count == 0)
+    {
+        num1 = screen.textContent;
+    }
+    else
+    {
+        num2 = result.toString();   
+        num1 = screen.textContent;
+    }
 }
